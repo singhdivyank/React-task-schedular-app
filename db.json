@@ -1,0 +1,16 @@
+{
+  "tasks": [
+    {
+      "id": 2,
+      "text": "Interview",
+      "day": "21 September at 9 am",
+      "reminder": true
+    },
+    {
+      "id": 3,
+      "text": "Result declaration",
+      "day": "22 September any time",
+      "reminder": true
+    }
+  ]
+}
