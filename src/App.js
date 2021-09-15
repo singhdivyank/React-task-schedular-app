@@ -8,7 +8,7 @@ import Tasks from "./components/Tasks";
 import AddTask from "./components/AddTask";
 import About from "./components/About";
 
-/* The UI is generated from this peice of code */
+/* The UI is generated from this piece of code */
 const App = () => {
   const [showAddTask, setShowAddTask] = useState(false);
   const [tasks, setTasks] = useState([]);
@@ -27,7 +27,7 @@ const App = () => {
     [] // dependency array
   );
 
-  // fetch tasks
+  // Fetch Tasks
   const fetchTasks = async () => {
     const res = await fetch("http://localhost:5000/tasks");
     const data = await res.json();
@@ -35,7 +35,7 @@ const App = () => {
     return data;
   };
 
-  // fetch task
+  // Fetch Task
   const fetchTask = async (id) => {
     const res = await fetch(`http://localhost:5000/tasks/${id}`);
     const data = await res.json();
@@ -43,39 +43,42 @@ const App = () => {
     return data;
   };
 
-  // Add task
+  // Add Task
   const addTask = async (task) => {
     const res = await fetch("http://localhost:5000/tasks", {
       method: "POST",
       headers: {
-        "Contenet-type": "application/json",
+        "Content-type": "application/json",
       },
-      body: JSON.stringify(task), // convert object to string
+      body: JSON.stringify(task),
     });
 
     const data = await res.json();
+
     setTasks([...tasks, data]);
   };
 
-  // Delete a task
+  // Delete Task
   const deleteTask = async (id) => {
-    await fetch(`http://localhost:5000/tasks/${id}`, {
+    const res = await fetch(`http://localhost:5000/tasks/${id}`, {
       method: "DELETE",
     });
-    setTasks(tasks.filter((task) => task.id !== id)); // filter out the tasks
+    res.status === 200
+      ? setTasks(tasks.filter((task) => task.id !== id)) // filter out the tasks
+      : alert("Error Deleting This Task");
   };
 
-  // Toggle reminder
+  // Toggle Reminder
   const toggleReminder = async (id) => {
     const taskToToggle = await fetchTask(id);
-    const update = { ...taskToToggle, reminder: !taskToToggle.reminder };
+    const updTask = { ...taskToToggle, reminder: !taskToToggle.reminder };
 
     const res = await fetch(`http://localhost:5000/tasks/${id}`, {
       method: "PUT",
       headers: {
         "Content-type": "application/json",
       },
-      body: JSON.stringify(update),
+      body: JSON.stringify(updTask),
     });
 
     const data = await res.json();
@@ -88,7 +91,6 @@ const App = () => {
   };
 
   /* To use routing wrap the output in router */
-
   return (
     <Router>
       <div className="container">
